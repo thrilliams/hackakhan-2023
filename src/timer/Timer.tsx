@@ -28,7 +28,7 @@ export const Timer = ({ size, block, remainingSeconds }: TimerProps) => {
 		>
 			<div className="flex justify-center items-center font-bold text-white">
 				{/* only display hours part if the block is longer than an hour */}
-				{block.seconds > 60 * 60 ? (
+				{block.seconds >= 60 * 60 ? (
 					<>
 						<span>{hoursPart.toString().padStart(2, '0')}</span>:
 					</>

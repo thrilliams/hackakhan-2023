@@ -10,11 +10,13 @@ interface BlockEditorProps {
 export const BlockEditor = ({ block, onChange }: BlockEditorProps) => {
 	const [color, setColor] = useState<keyof typeof timerColors>(block.color);
 	const [label, setLabel] = useState(block.label);
+	const [actionLabel, setActionLabel] = useState(block.actionLabel);
 	const [minutes, setMinutes] = useState(block.seconds / 60);
 
 	useEffect(() => {
 		setColor(block.color);
 		setLabel(block.label);
+		setActionLabel(block.actionLabel);
 		setMinutes(block.seconds / 60);
 	}, [block]);
 
@@ -34,7 +36,14 @@ export const BlockEditor = ({ block, onChange }: BlockEditorProps) => {
 					value={minutes}
 					onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
 				/>{' '}
-				minutes.
+				minutes. (You will be{' '}
+				<input
+					type="text"
+					className="underline w-24 text-center"
+					value={actionLabel}
+					onChange={(e) => setActionLabel(e.target.value)}
+				/>
+				.)
 			</div>
 			<div className="flex gap-2 justify-center">
 				<select
@@ -48,12 +57,15 @@ export const BlockEditor = ({ block, onChange }: BlockEditorProps) => {
 					))}
 				</select>
 				<button
-					className="border-2 px-1 rounded"
+					className="border-2 px-1 rounded bg-white hover:brightness-95"
 					onClick={() => onChange({ ...block, color, label, seconds: minutes * 60 })}
 				>
 					Save
 				</button>
-				<button className="border-2 px-1 rounded" onClick={() => onChange(null)}>
+				<button
+					className="border-2 px-1 rounded bg-white hover:brightness-95"
+					onClick={() => onChange(null)}
+				>
 					Delete
 				</button>
 			</div>
