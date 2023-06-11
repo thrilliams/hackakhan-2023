@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.card {
+		@apply relative;
+		transition: transform 0.5s;
+		transform-style: preserve-3d;
+	}
+
+	.card.flipped {
+		transform: perspective(20rem) rotateY(180deg);
+	}
+
+	.front,
+	.back {
+		@apply absolute;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
+
+	.back {
+		transform: rotateY(180deg);
+	}
+}
