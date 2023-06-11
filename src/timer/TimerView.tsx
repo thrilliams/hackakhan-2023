@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FaArrowDown } from 'react-icons/fa';
+import { FaArrowDown, FaPlus } from 'react-icons/fa';
 import { useTimer } from 'react-use-precision-timer';
 import { Timer } from './Timer';
 import { timerColors } from './timerColors';
@@ -7,6 +7,7 @@ import { TimerBlockSchema } from './type/TimerBlockSchema';
 import { TimerSchema } from './type/TimerSchema';
 import { useTimerInfo } from './useTimerInfo';
 import { BlockEditor } from './BlockEditor';
+import { nanoid } from 'nanoid';
 
 interface TimerViewProps {
 	setStart: (value: number) => void;
@@ -49,10 +50,10 @@ export const TimerView = ({ start, setStart }: TimerViewProps) => {
 
 	const [selectedBlockId, selectBlock] = useState<string | null>(null);
 
-	const selectedBlock = selectedBlockId ? timer.blocks[selectedBlockId] : null;
+	const selectedBlock = timer.blocks[selectedBlockId!];
 
 	return (
-		<div className="flex flex-col justify-center min-h-[100lvh] gap-10">
+		<div className="flex flex-col min-h-[100lvh] gap-10 pt-10">
 			<div className="flex justify-center items-center gap-2">
 				{block === null || remainingSeconds === null ? (
 					<div>Timer complete!</div>
@@ -126,9 +127,30 @@ export const TimerView = ({ start, setStart }: TimerViewProps) => {
 						</button>
 					);
 				})}
+				<button
+					className="rounded-md inline-flex justify-center items-center p-2 text-white bg-black aspect-square"
+					onClick={() => {
+						const id = nanoid();
+						setTimer((timer) => ({
+							...timer,
+							blocks: {
+								...timer.blocks,
+								[id]: {
+									id,
+									seconds: 60,
+									label: 'New Block',
+									color: 'purple'
+								}
+							}
+						}));
+						selectBlock(id);
+					}}
+				>
+					<FaPlus />
+				</button>
 			</div>
 
-			{selectedBlock !== null ? (
+			{selectedBlock !== undefined ? (
 				<BlockEditor
 					block={selectedBlock}
 					onChange={(block) => {

@@ -23,14 +23,14 @@ export const BlockEditor = ({ block, onChange }: BlockEditorProps) => {
 			<div className="text-center">
 				<input
 					type="text"
-					className="underline w-12"
+					className="underline w-24 text-center"
 					value={label}
 					onChange={(e) => setLabel(e.target.value)}
 				/>{' '}
 				for{' '}
 				<input
 					type="text"
-					className="underline w-12"
+					className="underline w-12 text-center"
 					value={minutes}
 					onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
 				/>{' '}
